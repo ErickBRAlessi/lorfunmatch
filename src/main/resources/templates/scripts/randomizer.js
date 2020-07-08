@@ -183,9 +183,13 @@ function randomized() {
     $("#p2-modal-region-2").html("<img class='img-fluid' src='" + p2.regions[1].imgUrl + "'/>");
 
     //loading modifiers
-    if (modifiers.length > 0) {
+    if (!(typeof modifiers[0] === 'undefined')) {
         $("#modal-modifiers-list").html("<div class='col-sm-12'>"
             + modifiers[0].description + "</div>");
+    } else {
+        $("#modal-modifiers-list").html("<div class='col-sm-12'>"
+        +"NO MODIFIERS SELECTED" + "</div>");
+
     }
 
 }
