@@ -224,15 +224,8 @@
     <h2>Modifiers</h2>
 
     <div class="well" style="max-height: 300px;overflow: auto;">
-      <ul class="list-group checked-list-box">
-        <li class="list-group-item">No Magics!</li>
-        <li class="list-group-item">Only Commons</li>
-        <li class="list-group-item">Only Commons and Rares</li>
-        <li class="list-group-item">No Legends Allowed</li>
-        <li class="list-group-item">Only 3+ Cost Cards</li>
-        <li class="list-group-item">Only 5- Cost Cards</li>
-      </ul>
-
+      <div id="modifiers-list" class="row">
+      </div>
     </div>
 
 
@@ -276,12 +269,14 @@
           <div class="modal-body">
 
             <div class="row">
+              <h6>Players</h6>
               <div id="p1-modal-name" class="col-sm-6 text-center">
               </div>
               <div id="p2-modal-name" class="col-sm-6 text-center">
               </div>
             </div>
             <div class="row">
+              <h6>Regions</h6>
               <div id="p1-modal-region-1" class="col-sm-3 text-center">
               </div>
               <div id="p1-modal-region-2" class="col-sm-3 text-center">
@@ -290,6 +285,10 @@
               </div>
               <div id="p2-modal-region-2" class="col-sm-3 text-center">
               </div>
+            </div>
+            <h6>Modifiers</h6>
+            <div class="row" id="modal-modifiers-list">
+
             </div>
           </div>
 
@@ -302,7 +301,7 @@
         <!--/.Content-->
       </div>
     </div>
-    <!-- Modal: modalAbandonedCart-->
+    <!-- Modal: modalResult-->
 
 </body>
 </div>
@@ -310,20 +309,4 @@
 </html>
 
 
-<script src="scripts/randomizer.js">
-
-
-</script>
-<!--
-
-  var p1Regions =  [
-  bilgewater:bilgewaterRegion,
-  demacia:demaciaRegion,
-  freljord:freljordRegion,
-  ionia:ioniaRegion,
-  noxus:noxusRegion,
-  piltover:piltoverRegion,
-  shadow:shadowRegion
-  ]
-  ; 
--->
+<script src="scripts/randomizer.js"></script>

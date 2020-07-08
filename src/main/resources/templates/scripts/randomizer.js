@@ -14,11 +14,20 @@ class Region {
     }
 }
 
+class Modifier {
+    constructor(id, description, active) {
+        this.id = id;
+        this.description = description;
+        this.active = active;
+    }
+}
+
 //main class, control the randomization of all components
 class Randomizer {
-    constructor(p1Regions, p2Regions) {
+    constructor(p1Regions, p2Regions, modifiers) {
         this.p1Regions = p1Regions;
         this.p2Regions = p2Regions;
+        this.modifiers = modifiers;
     };
 
     randomInt(min, max) {
@@ -47,52 +56,67 @@ class Randomizer {
         return regionsRandomized;
     }
 
+    get1Modifier() {
+        var modifiers = [];
+        modifiers.push(this.modifiers[this.randomInt(0, this.modifiers.length)]);
+        return modifiers;
+    }
+
     refreshRandomizer() {
-        randomizer.p1Regions = [];
-        randomizer.p2Regions = [];
+        this.p1Regions = [];
+        this.p2Regions = [];
+        this.modifiers = [];
+
         if ($("#p1-bilgewater").is(":checked")) {
-            randomizer.p1Regions.push(new Region("bilgewater", true, "img/Bilgewater-Icon.png"));
+            this.p1Regions.push(new Region("bilgewater", true, "img/Bilgewater-Icon.png"));
         }
         if ($("#p1-demacia").is(":checked")) {
-            randomizer.p1Regions.push(new Region("demacia", true, "img/Demacia-Icon.png"));
+            this.p1Regions.push(new Region("demacia", true, "img/Demacia-Icon.png"));
         }
         if ($("#p1-freljord").is(":checked")) {
-            randomizer.p1Regions.push(new Region("freljord", true, "img/Freljord-Icon.png"));
+            this.p1Regions.push(new Region("freljord", true, "img/Freljord-Icon.png"));
         }
         if ($("#p1-ionia").is(":checked")) {
-            randomizer.p1Regions.push(new Region("ionia", true, "img/Ionia-Icon.png"));
+            this.p1Regions.push(new Region("ionia", true, "img/Ionia-Icon.png"));
         }
         if ($("#p1-noxus").is(":checked")) {
-            randomizer.p1Regions.push(new Region("noxus", true, "img/Noxus-Icon.png"));
+            this.p1Regions.push(new Region("noxus", true, "img/Noxus-Icon.png"));
         }
         if ($("#p1-piltover").is(":checked")) {
-            randomizer.p1Regions.push(new Region("piltover", true, "img/Piltover-Zaun-Icon.png"));
+            this.p1Regions.push(new Region("piltover", true, "img/Piltover-Zaun-Icon.png"));
         }
         if ($("#p1-shadow").is(":checked")) {
-            randomizer.p1Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
+            this.p1Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
         }
 
         if ($("#p2-bilgewater").is(":checked")) {
-            randomizer.p2Regions.push(new Region("bilgewater", true, "img/Bilgewater-Icon.png"));
+            this.p2Regions.push(new Region("bilgewater", true, "img/Bilgewater-Icon.png"));
         }
         if ($("#p2-demacia").is(":checked")) {
-            randomizer.p2Regions.push(new Region("demacia", true, "img/Demacia-Icon.png"));
+            this.p2Regions.push(new Region("demacia", true, "img/Demacia-Icon.png"));
         }
         if ($("#p2-freljord").is(":checked")) {
-            randomizer.p2Regions.push(new Region("freljord", true, "img/Freljord-Icon.png"));
+            this.p2Regions.push(new Region("freljord", true, "img/Freljord-Icon.png"));
         }
         if ($("#p2-ionia").is(":checked")) {
-            randomizer.p2Regions.push(new Region("ionia", true, "img/Ionia-Icon.png"));
+            this.p2Regions.push(new Region("ionia", true, "img/Ionia-Icon.png"));
         }
         if ($("#p2-noxus").is(":checked")) {
-            randomizer.p2Regions.push(new Region("noxus", true, "img/Noxus-Icon.png"));
+            this.p2Regions.push(new Region("noxus", true, "img/Noxus-Icon.png"));
         }
         if ($("#p2-piltover").is(":checked")) {
-            randomizer.p2Regions.push(new Region("piltover", true, "img/Piltover-Zaun-Icon.png"));
+            this.p2Regions.push(new Region("piltover", true, "img/Piltover-Zaun-Icon.png"));
         }
         if ($("#p2-shadow").is(":checked")) {
-            randomizer.p2Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
+            this.p2Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
         }
+
+        for (modifier of allModifiers) {
+            if ($(modifier.id).is(":checked")) {
+                this.modifiers.push(modifier);
+            }
+        }
+
     }
 }
 
@@ -106,11 +130,19 @@ var allRegions = [
     new Region("shadow", true, "img/Shadow-Isle-Icon.png")
 ];
 
+var allModifiers = [
+    new Modifier("no-magic", "No Magics!", true),
+    new Modifier("only-commons", "Only Commons!", true),
+    new Modifier("only-commons-rares", "Only Commons and Rares!", true),
+    new Modifier("no-legends", "No Legends Allowed", true),
+    new Modifier("only-cost-3+", "Only 3+ Cost Cards", true),
+    new Modifier("only-cost-5-", "Only 5- Cost Cards", true),
+];
 
 var p1 = new Player("Player 1", [], "");
 var p2 = new Player("Player 2", [], "");
 
-var randomizer = new Randomizer(allRegions, allRegions);
+var randomizer = new Randomizer(allRegions, allRegions, allModifiers);
 
 
 function refreshNames() {
@@ -134,7 +166,10 @@ function randomized() {
     //randomizing regions
     p1.regions = randomizer.get2P1Regions();
     p2.regions = randomizer.get2P2Regions();
-    
+
+    //randomizing modifiers
+    modifiers = randomizer.get1Modifier();
+
     //test if same region 4both
     if ($("#same-region-for-both").is(":checked")) {
         console.log("same region");
@@ -146,15 +181,30 @@ function randomized() {
     $("#p1-modal-region-2").html("<img class='img-fluid' src='" + p1.regions[1].imgUrl + "'/>");
     $("#p2-modal-region-1").html("<img class='img-fluid' src='" + p2.regions[0].imgUrl + "'/>");
     $("#p2-modal-region-2").html("<img class='img-fluid' src='" + p2.regions[1].imgUrl + "'/>");
+
+    //loading modifiers
+    if (modifiers.length > 0) {
+        $("#modal-modifiers-list").html("<div class='col-sm-12'>"
+            + modifiers[0].description + "</div>");
+    }
+
 }
 
-$("input").change(function () {
-    refreshNames();
-    randomizer.refreshRandomizer();
-    console.log("something has changed")
-});
 
 
+$(document).ready(function () {
+    for (modifier of allModifiers) {
+        $("#modifiers-list").append("<div class='col-sm-3'>" +
+            "<input id = '" + modifier.id + "'type = 'checkbox' checked = '" + modifier.active + "'/>"
+            + modifier.description + "</div>"
+        )
+    }
+    $("input").change(function () {
+        refreshNames();
+        randomizer.refreshRandomizer();
+        console.log("something has changed")
+    });
+})
 
 
 function findRegionIndex(player, name) {
