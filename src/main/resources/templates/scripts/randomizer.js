@@ -14,6 +14,16 @@ class Region {
     }
 }
 
+const allRegions = [
+    new Region("bilgewater", true, "img/Bilgewater-Icon.png"),
+    new Region("demacia", true, "img/Demacia-Icon.png"),
+    new Region("freljord", true, "img/Freljord-Icon.png"),
+    new Region("ionia", true, "img/Ionia-Icon.png"),
+    new Region("noxus", true, "img/Noxus-Icon.png"),
+    new Region("piltover", true, "img/Piltover-Zaun-Icon.png"),
+    new Region("shadow", true, "img/Shadow-Isle-Icon.png")
+];
+
 class Modifier {
     constructor(id, description, active) {
         this.id = id;
@@ -21,6 +31,18 @@ class Modifier {
         this.active = active;
     }
 }
+
+const allModifiers = [
+    new Modifier("no-magic", "No Spells!", true),
+    new Modifier("only-commons", "Only Commons!", true),
+    new Modifier("only-commons-rares", "Only Commons and Rares!", true),
+    new Modifier("no-champions", "No Champions Allowed", true),
+    new Modifier("only-cost-3+", "Only 3 or more Cost Cards", true),
+    new Modifier("only-cost-5-", "Only 5 or less Cost Cards", true),
+    new Modifier("only-btw-3-6", "Only Cards with Cost 3 or more and 6 or less", true),
+    new Modifier("6-diffent-champions", "Must have 6 different champions", true),
+    new Modifier("no-more-than-1-copy", "No more than 1 copy of each card", true)
+];
 
 //main class, control the randomization of all components
 class Randomizer {
@@ -111,33 +133,16 @@ class Randomizer {
             this.p2Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
         }
 
-        for (modifier of allModifiers) {
-            if ($(modifier.id).is(":checked")) {
+        for (var modifier of allModifiers) {
+            if ($("#" + modifier.id).is(":checked")) {
                 this.modifiers.push(modifier);
+                console.log(modifier);
             }
         }
 
     }
 }
 
-var allRegions = [
-    new Region("bilgewater", true, "img/Bilgewater-Icon.png"),
-    new Region("demacia", true, "img/Demacia-Icon.png"),
-    new Region("freljord", true, "img/Freljord-Icon.png"),
-    new Region("ionia", true, "img/Ionia-Icon.png"),
-    new Region("noxus", true, "img/Noxus-Icon.png"),
-    new Region("piltover", true, "img/Piltover-Zaun-Icon.png"),
-    new Region("shadow", true, "img/Shadow-Isle-Icon.png")
-];
-
-var allModifiers = [
-    new Modifier("no-magic", "No Magics!", true),
-    new Modifier("only-commons", "Only Commons!", true),
-    new Modifier("only-commons-rares", "Only Commons and Rares!", true),
-    new Modifier("no-legends", "No Legends Allowed", true),
-    new Modifier("only-cost-3+", "Only 3+ Cost Cards", true),
-    new Modifier("only-cost-5-", "Only 5- Cost Cards", true),
-];
 
 var p1 = new Player("Player 1", [], "");
 var p2 = new Player("Player 2", [], "");
@@ -188,7 +193,7 @@ function randomized() {
             + modifiers[0].description + "</div>");
     } else {
         $("#modal-modifiers-list").html("<div class='col-sm-12'>"
-        +"NO MODIFIERS SELECTED" + "</div>");
+            + "NO MODIFIERS SELECTED" + "</div>");
 
     }
 
