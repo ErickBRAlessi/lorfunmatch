@@ -21,7 +21,8 @@ const allRegions = [
     new Region("ionia", true, "img/Ionia-Icon.png"),
     new Region("noxus", true, "img/Noxus-Icon.png"),
     new Region("piltover", true, "img/Piltover-Zaun-Icon.png"),
-    new Region("shadow", true, "img/Shadow-Isle-Icon.png")
+    new Region("shadow", true, "img/Shadow-Isle-Icon.png"),
+    new Region("targon", true, "img/Targon-Icon.png")
 ];
 
 class Modifier {
@@ -110,6 +111,9 @@ class Randomizer {
         if ($("#p1-shadow").is(":checked")) {
             this.p1Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
         }
+        if ($("#p1-targon").is(":checked")) {
+            this.p1Regions.push(new Region("targon", true, "img/Targon-Icon.png"));
+        }
 
         if ($("#p2-bilgewater").is(":checked")) {
             this.p2Regions.push(new Region("bilgewater", true, "img/Bilgewater-Icon.png"));
@@ -131,6 +135,9 @@ class Randomizer {
         }
         if ($("#p2-shadow").is(":checked")) {
             this.p2Regions.push(new Region("shadow", true, "img/Shadow-Isle-Icon.png"));
+        }
+        if ($("#p2-targon").is(":checked")) {
+            this.p2Regions.push(new Region("targon", true, "img/Targon-Icon.png"));
         }
 
         for (var modifier of allModifiers) {
